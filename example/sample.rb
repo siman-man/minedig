@@ -10,5 +10,10 @@ end
 puts project.user_name
 puts project.redmine_host
 
-puts project.full_path
-puts project.member_list
+project.member_list.each do |member|
+  puts member.name
+end
+
+project.issue_list do |issue|
+  p issue
+end

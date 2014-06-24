@@ -2,6 +2,7 @@ module RedmineTool
   class Project
     include Query
     include Members
+    include Issues
 
     attr_accessor :user_name, :redmine_host, :path, :api_key
     
@@ -9,10 +10,6 @@ module RedmineTool
       if block_given?
         yield self
       end
-    end
-
-    def full_path
-      uri = URI::HTTP.build( host: redmine_host, path: path ).to_s
     end
   end
 end
