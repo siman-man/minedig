@@ -1,9 +1,9 @@
-require 'redmine_tool'
+require 'redmine'
 Dotenv.load
 
 project = RedmineTool::Project.new do |config|
   config.redmine_host = ENV["REDMINE_HOST"]
-  config.path = ENV["REDMINE_PATH"]
+  config.path = ENV["PROJECT_PATH"]
   config.api_key = ENV["API_KEY"]
 end
 

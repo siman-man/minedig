@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
 
-# Specify your gem's dependencies in redmine_tool.gemspec
+# Specify your gem's dependencies in redmine.gemspec
 
 gemspec

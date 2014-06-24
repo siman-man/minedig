@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'redmine_tool/version'
+require 'redmine/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "redmine_tool"
+  spec.name          = "redmine"
   spec.version       = RedmineTool::VERSION
   spec.authors       = ["siman"]
   spec.email         = ["shuichi@occ.co.jp"]
