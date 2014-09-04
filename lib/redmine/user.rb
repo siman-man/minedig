@@ -1,10 +1,10 @@
  module Redmine
-  class User 
+  class User
     class << User
       # メンバーの一覧を取得する
       # @return [Array] メンバー情報
-      def list
-        query = Query::create( path: path, method: '/memberships.json' )
+      def list( host: host, path: path )
+        query = Query::create( host: redmine_host, path: path, method: '/memberships.json' )
         response = Query::send( query: query, api_key: api_key )
         json = JSON.load(response.body)
         users = []

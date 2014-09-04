@@ -49,7 +49,7 @@ module Redmine
     end
 
     def user_list
-      Redmine::User.list
+      Redmine::User.list( host: redmine_host, path: path )
     end
   end
 end
