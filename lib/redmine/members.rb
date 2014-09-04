@@ -1,4 +1,4 @@
-module RedmineTool
+module Redmine
   module Members 
     def member_list
       uri = Query::create( host: redmine_host, path: path, method: '/memberships.json' )

@@ -3,10 +3,12 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'ostruct'
-require "dotenv"
+require 'dotenv'
 
-require "redmine/version"
-require "redmine/query"
+require 'redmine/version'
+require 'redmine/utilities'
+require 'redmine/query'
 require "redmine/members"
 require "redmine/issues"
+require 'redmine/ticket'
 require "redmine/project"

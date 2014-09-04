@@ -5,7 +5,7 @@ require 'redmine/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "redmine"
-  spec.version       = RedmineTool::VERSION
+  spec.version       = Redmine::VERSION
   spec.authors       = ["siman"]
   spec.email         = ["shuichi@occ.co.jp"]
   spec.summary       = %q{Redmine API}

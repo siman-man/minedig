@@ -1,4 +1,4 @@
-module RedmineTool
+module Redmine
   class Project
     include Query
     include Members
