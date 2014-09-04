@@ -16,9 +16,3 @@ member_list = project.member_list
 member_list.each do |member|
   puts member.name
 end
-
-project.issue_list.each do |issue|
-  if member_list.last.name == issue.assigned_to.name
-    puts member_list.first.name
-  end
-end

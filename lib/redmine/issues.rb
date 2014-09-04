@@ -1,7 +1,7 @@
 module Redmine
   module Issues
     def issue_list
-      query = Query::create( host: redmine_host, path: path, method: '/issues.json' )
+      query = Query::create( path: path, method: '/issues.json' )
       response = Query::send( query: query, api_key: api_key )
       json = JSON.load(response.body)
       issues = []

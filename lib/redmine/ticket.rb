@@ -1,13 +1,13 @@
 module Redmine
 
   # Redmineのチケットに関する処理をまとめたもの
-  class Ticket
+  module Ticket
     class << Ticket
       
       # チケット一覧を取得する
       # @return [Array] 取得したチケットの一覧
       def list
-        query = Query::create( host: redmine_host, path: path, method: '/issues.json' )
+        query = Query::create( path: path, method: '/issues.json' )
         response = Query::send( query: query, api_key: api_key )
         json = JSON.load(response.body)
         tickets = []
@@ -25,7 +25,7 @@ module Redmine
       def self.find( id, type: :json )
         raise "IDが指定されていません。" if id.nil?
 
-        query = Query::create( host: redmine_host, path: 'issues', method: "/#{id}.#{type.to_s}" )
+        query = Query::create( path: 'issues', method: "/#{id}.#{type.to_s}" )
         response = Query::send( query: query, api_key: api_key )
 
         ticket = JSON.load(response.body)
