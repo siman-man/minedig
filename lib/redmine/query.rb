@@ -1,14 +1,13 @@
 module Redmine
   module Query
-    Dotenv.load
 
     # 送信するクエリの作成
     # @param [String] host 送信先のRedmineホスト URL.
     # @param [String] path 対象のプロジェクト
     # @param [String] method クエリの種類
     # return [String] 生成されたクエリ文
-    def self.create( path: '', method: '' )
-      URI::HTTP.build( host: redmine_host, path: path + method )
+    def self.create( host: '', path: '', method: '' )
+      URI::HTTP.build( host: host, path: path + method )
     end
 
     # クエリの送信を行う
