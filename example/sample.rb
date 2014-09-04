@@ -10,7 +10,7 @@ end
 
 puts project.redmine_host
 
-member_list = project.member_list
+user_list = project.user_list
 ticket = project.ticket(63484)
 
 p ticket.id
@@ -20,6 +20,6 @@ puts ticket.priority
 puts ticket.project
 puts ticket.status
 
-member_list.each do |member|
-  puts member.name
+user_list.each do |user|
+  puts user.name
 end

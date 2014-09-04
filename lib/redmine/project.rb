@@ -48,19 +48,8 @@ module Redmine
       end
     end
 
-    def member_list
-      query = Query::create( host: redmine_host, path: path, method: '/memberships.json' )
-      response = Query::send( query: query, api_key: api_key )
-      json = JSON.load(response.body)
-      members = []
-
-      json["memberships"].each do |data|
-        if data["user"]
-          members << OpenStruct.new(data["user"])
-        end
-      end
-
-      members
+    def user_list
+      Redmine::User.list
     end
   end
 end

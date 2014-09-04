@@ -1,21 +1,21 @@
  module Redmine
-  class Member 
-    class << Member
+  class User 
+    class << User
       # メンバーの一覧を取得する
       # @return [Array] メンバー情報
       def list
         query = Query::create( path: path, method: '/memberships.json' )
         response = Query::send( query: query, api_key: api_key )
         json = JSON.load(response.body)
-        members = []
+        users = []
 
         json["memberships"].each do |data|
           if data["user"]
-            members << OpenStruct.new(data["user"])
+            users << OpenStruct.new(data["user"])
           end
         end
 
-        members
+        users
       end
     end
   end

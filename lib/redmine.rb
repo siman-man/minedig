@@ -8,6 +8,6 @@ require 'dotenv'
 require 'redmine/version'
 require 'redmine/utilities'
 require 'redmine/query'
-require 'redmine/member'
+require 'redmine/user'
 require 'redmine/ticket'
 require "redmine/project"

@@ -1,11 +1,9 @@
 module Redmine
-
   # Redmineのチケットに関する処理をまとめたもの
   class Ticket
     attr_reader :ticket
 
     class << Ticket
-      
       # チケット一覧を取得する
       # @return [Array] 取得したチケットの一覧
       def list
