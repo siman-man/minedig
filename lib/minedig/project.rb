@@ -22,7 +22,7 @@ module Minedig
     # @param id ticket id.
     # @return [BasicObject] information of ticket.
     def ticket(id)
-      raise "ID has not been specified." if id.nil?
+      raise 'ID has not been specified.' if id.nil?
 
       query = Minedig::Query::create( host: host, path: "/issues/#{id}.json" )
 
