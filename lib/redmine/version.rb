@@ -1,7 +1,5 @@
-#
 # redmineのversionを管理している
 # VERSION - redmineのバージョン
-#
-class Redmine
+module Minedig
   VERSION = "0.0.1"
 end

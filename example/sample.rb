@@ -1,4 +1,4 @@
-require 'redmine'
+require 'minedig'
 require 'pp'
 Dotenv.load
 

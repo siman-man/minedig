@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'redmine/version'
+require 'minedig/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "redmine"
-  spec.version       = Redmine::VERSION
+  spec.name          = "minedig"
+  spec.version       = Minedig::VERSION
   spec.authors       = ["siman"]
   spec.email         = ["shuichi@occ.co.jp"]
-  spec.summary       = %q{Redmine API}
-  spec.description   = %q{Redmine API}
+  spec.summary       = %q{Redmine API wrapper}
+  spec.description   = %q{Redmine API wrapper}
   spec.homepage      = ""
   spec.license       = "MIT"
 

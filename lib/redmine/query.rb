@@ -1,4 +1,4 @@
-class Redmine
+class Minedig
   module Query
 
     # 送信するクエリの作成
@@ -6,8 +6,8 @@ class Redmine
     # @param [String] path 対象のプロジェクト
     # @param [String] method クエリの種類
     # return [String] 生成されたクエリ文
-    def self.create( host: '', path: '', method: '' )
-      URI::HTTP.build( host: host, path: path + method )
+    def self.create( host: '', identifier: '', method: '' )
+      URI::HTTP.build( host: host, path: identifier + method )
     end
 
     # クエリの送信を行う
