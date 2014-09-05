@@ -2,29 +2,29 @@
 
 module Minedig
   class Project
-    attr_reader :id, :name, :identifier, :api_key, :host
+    attr_reader :id, :name, :path, :api_key, :host
 
-    def initialize( id: nil, name: nil, identifier: nil, api_key: nil, host: nil )
+    def initialize( id: nil, name: nil, path: nil, api_key: nil, host: nil )
       @id = id
       @name = name
-      @identifier = identifier
+      @path = path
       @api_key = api_key
       @host = host
     end
 
-    # チケットの一覧を獲得する
-    # @return [Array] チケット一覧
+    # Get ticket list.
+    # @return [Array] ticket list.
     def ticket_list
       Minedig::Ticket.list
     end
 
-    # 指定したIDのチケットの取得を行う。
-    # @param id チケットのID
-    # @return [BasicObject] チケット情報
+    # Get the ticket with specified id.
+    # @param id ticket id.
+    # @return [BasicObject] information of ticket.
     def ticket(id)
-      raise "IDが指定されていません。" if id.nil?
+      raise "ID has not been specified." if id.nil?
 
-      query = Minedig::Query::create( host: host, method: "/issues/#{id}.json" )
+      query = Minedig::Query::create( host: host, path: "/issues/#{id}.json" )
 
       begin
         response = Minedig::Query::send( query: query, api_key: api_key )
@@ -37,10 +37,30 @@ module Minedig
       end
     end
 
-    # メンバーの一覧を取得する
-    # @return [Array] メンバー情報
+    # Get project ticket list.
+    # @return [Array] ticket information.
+    def tickets
+      query = Minedig::Query::create( host: host, path: '/issues.json', param: "project_id=#{id}" )
+
+      begin
+        response = Minedig::Query::send( query: query, api_key: api_key )
+        json = JSON.load(response.body)
+        tickets = []
+
+        json['issues'].each do |issue|
+          tickets << Minedig::Ticket.new(OpenStruct.new(issue))
+        end
+
+        tickets
+      rescue => ex
+        puts ex.message
+      end
+    end
+
+    # Get member list.
+    # @return [Array] member information.
     def user_list
-      query = Minedig::Query::create( host: host, identifier: identifier, method: '/memberships.json' )
+      query = Minedig::Query::create( host: host, path: "#{path}/memberships.json" )
       response = Minedig::Query::send( query: query, api_key: api_key )
       json = JSON.load(response.body)
       users = []

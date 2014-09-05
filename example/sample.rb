@@ -2,17 +2,20 @@ require 'minedig'
 require 'pp'
 Dotenv.load
 
-redmine = Redmine.new do |config|
+# Creaet redmien instance.
+redmine = Minedig::Redmine.new do |config|
   config.host = ENV["REDMINE_HOST"]
   config.api_key = ENV["API_KEY"]
 end
 
+# show redmien host.
 puts redmine.host
 
-project = redmine.project('イノベーション推進部')
+project = redmine.project('api')
 
 user_list = project.user_list
-ticket = project.ticket(63484)
+tickets = project.tickets
+ticket = tickets.first
 
 p ticket.id
 p ticket.properties
