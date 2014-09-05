@@ -1,4 +1,4 @@
- module Redmine
+class Redmine
   class User
     class << User
       # メンバーの一覧を取得する

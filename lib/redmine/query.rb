@@ -1,4 +1,4 @@
-module Redmine
+class Redmine
   module Query
 
     # 送信するクエリの作成

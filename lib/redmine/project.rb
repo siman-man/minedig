@@ -1,26 +1,11 @@
-module Redmine
+class Redmine
   class Project
-    include Query
+    attr_reader :id, :name, :identifier
 
-    attr_accessor :user_name, :redmine_host, :path, :api_key
-    
-    def initialize
-      if block_given?
-        yield self
-      end
-    end
-
-    def list
-      query = Query::create( host: redmine_host, method: '/projects.json' )
-      response = Query::send( query: query, api_key: api_key )
-      json = JSON.load(response.body)
-      projects = []
-
-      json["projects"].each do |data|
-        projects << OpenStruct.new(data)
-      end
-
-      projects
+    def initialize( id: id, name: name, identifier: identifier )
+      @id = id
+      @name = name
+      @identifier = identifier
     end
 
     # チケットの一覧を獲得する

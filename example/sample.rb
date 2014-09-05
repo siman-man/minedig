@@ -2,13 +2,14 @@ require 'redmine'
 require 'pp'
 Dotenv.load
 
-project = Redmine::Project.new do |config|
-  config.redmine_host = ENV["REDMINE_HOST"]
-  config.path = ENV["PROJECT_PATH"]
+redmine = Redmine.new do |config|
+  config.host = ENV["REDMINE_HOST"]
   config.api_key = ENV["API_KEY"]
 end
 
-puts project.redmine_host
+puts redmine.host
+
+project = redmine.project('jiti-innovation-incident')
 
 user_list = project.user_list
 ticket = project.ticket(63484)

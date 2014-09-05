@@ -1,4 +1,4 @@
-module Redmine
+class Redmine
   # Redmineのチケットに関する処理をまとめたもの
   class Ticket
     attr_reader :ticket

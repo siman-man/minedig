@@ -2,6 +2,6 @@
 # redmineのversionを管理している
 # VERSION - redmineのバージョン
 #
-module Redmine
+class Redmine
   VERSION = "0.0.1"
 end
