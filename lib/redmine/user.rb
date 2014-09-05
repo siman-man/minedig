@@ -1,22 +1,22 @@
-class Redmine
-  class User
-    class << User
-      # メンバーの一覧を取得する
-      # @return [Array] メンバー情報
-      def list( host: host, path: path )
-        query = Query::create( host: redmine_host, path: path, method: '/memberships.json' )
-        response = Query::send( query: query, api_key: api_key )
-        json = JSON.load(response.body)
-        users = []
+# encoding: utf-8
 
-        json["memberships"].each do |data|
-          if data["user"]
-            users << OpenStruct.new(data["user"])
-          end
+class User < Project
+  class << User
+    # メンバーの一覧を取得する
+    # @return [Array] メンバー情報
+    def list
+      query = Redmine::Query::create( host: host, identifier: identifier, method: '/memberships.json' )
+      response = Redmine::Query::send( query: query, api_key: api_key )
+      json = JSON.load(response.body)
+      users = []
+
+      json["memberships"].each do |data|
+        if data["user"]
+          users << OpenStruct.new(data["user"])
         end
-
-        users
       end
+
+      users
     end
   end
 end

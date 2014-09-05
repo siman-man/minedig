@@ -1,12 +1,14 @@
-class Redmine
-  class Project
-    attr_reader :id, :name, :identifier
+# encoding: utf-8
 
-    def initialize( id: id, name: name, identifier: identifier )
-      @id = id
-      @name = name
-      @identifier = identifier
-    end
+class Project < Redmine
+  attr_reader :id, :name, :identifier, :api_key
+
+  def initialize( id: id, name: name, identifier: identifier, api_key: api_key )
+    @id = id
+    @name = name
+    @identifier = identifier
+    @api_key = api_key
+  end
 
     # チケットの一覧を獲得する
     # @return [Array] チケット一覧
@@ -34,7 +36,6 @@ class Redmine
     end
 
     def user_list
-      Redmine::User.list( host: redmine_host, path: path )
+      User.list( host: host, identifier: identifier )
     end
   end
-end

@@ -6,8 +6,8 @@ require 'ostruct'
 require 'dotenv'
 
 require 'redmine/version'
-require 'redmine/redmine'
 require 'redmine/query'
-require 'redmine/user'
+require 'redmine/redmine'
 require 'redmine/ticket'
 require "redmine/project"
+require 'redmine/user'

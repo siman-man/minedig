@@ -9,7 +9,7 @@ end
 
 puts redmine.host
 
-project = redmine.project('jiti-innovation-incident')
+project = redmine.project('イノベーション推進部')
 
 user_list = project.user_list
 ticket = project.ticket(63484)

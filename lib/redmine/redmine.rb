@@ -14,13 +14,21 @@ class Redmine
 
   # 指定されたidからプロジェクト検索し、そのプロジェクトを返す。
   def project(id)
+    p host
+    p api_key
     projects.each do |project|
       if project.id == id || project.name == id || project.identifier == id
-        return Project.new( id: project.id, name: project.name, identifier: project.identifier )
+        return Project.new({
+                  id: project.id, 
+                name: project.name, 
+          identifier: project.identifier,
+                host: host,
+             api_key: api_key 
+          })
       end
     end
 
-    raise "指定されたプロジェクトが見つかりませんでした。"
+    raise "Not found Project."
   end
 
   # プロジェクトの一覧を返す。
