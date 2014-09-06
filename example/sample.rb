@@ -12,7 +12,7 @@ end
 puts redmine.host
 
 project = redmine.project('api')
-p project.ticket(1000)
+p redmine.ticket(1000)
 user_list = project.user_list
 tickets = project.tickets
 ticket = tickets.first
