@@ -2,12 +2,13 @@
 
 module Minedig
   class Project
-    attr_reader :id, :name, :path, :api_key, :host
+    attr_reader :id, :name, :path, :root_path, :api_key, :host
 
-    def initialize( id: nil, name: nil, path: nil, api_key: nil, host: nil )
+    def initialize( id: nil, name: nil, path: '', root_path: '', api_key: '', host: '' )
       @id = id
       @name = name
       @path = path
+      @root_path = root_path
       @api_key = api_key
       @host = host
     end
@@ -21,7 +22,8 @@ module Minedig
     # Get project ticket list.
     # @return [Array] ticket information.
     def tickets
-      query = Minedig::Query::create( host: host, path: '/issues.json', param: "project_id=#{id}" )
+      query = Minedig::Query::create( host: host, path: root_path + '/issues.json', param: "project_id=#{id}" )
+      p query
 
       begin
         response = Minedig::Query::send( query: query, api_key: api_key )

@@ -8,8 +8,10 @@ describe 'Project' do
 
     it 'check config' do
       redmine = Minedig::Redmine.new do |config|
-        redmine.home = 'example.com/redmine'
+        config.home = 'example.com/redmine'
       end
+
+      redmine.stub(:projects).and_return(@projects_json)
     end
   end
 end

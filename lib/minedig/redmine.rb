@@ -5,6 +5,8 @@ module Minedig
     attr_accessor :user_name, :path, :api_key, :root_path, :host
     attr_reader :home
 
+    include Utilities
+
     def initialize
       if block_given?
         yield self
@@ -25,6 +27,7 @@ module Minedig
           return Minedig::Project.new({
             id: project.id,
             name: project.name,
+            root_path: root_path,
             path: @root_path + "/projects/#{project.identifier}",
             host: host,
             api_key: api_key
@@ -57,7 +60,7 @@ module Minedig
     # return project list.
     # @return [Array] project list.
     def projects
-      query = Minedig::Query::create( host: host, path: '/projects.json' )
+      query = Minedig::Query::create( host: host, path: root_path + '/projects.json' )
       response = Minedig::Query::send( query: query, api_key: api_key )
       json = JSON.load(response.body)
       projects = []
@@ -72,7 +75,7 @@ module Minedig
     # Convert Hash to OpenStruct data.
     # @param data Hash data.
     # @return [OpenStruct] OpenStruct data.
-    def self.hash2object(data)
+    def hash2object(data)
       result = OpenStruct.new
 
       data.each do |key, value|

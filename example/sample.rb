@@ -4,7 +4,7 @@ Dotenv.load
 
 # Creaet redmien instance.
 redmine = Minedig::Redmine.new do |config|
-  config.host = ENV["REDMINE_HOST"]
+  config.home = ENV["REDMINE_HOME"]
   config.api_key = ENV["API_KEY"]
 end
 
@@ -15,6 +15,7 @@ project = redmine.project('api')
 p redmine.ticket(1000)
 user_list = project.user_list
 tickets = project.tickets
+p tickets
 ticket = tickets.first
 
 p ticket.id
