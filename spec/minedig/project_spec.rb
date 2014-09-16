@@ -11,7 +11,7 @@ describe 'Project' do
         config.home = 'example.com/redmine'
       end
 
-      redmine.stub(:projects).and_return(@projects_json)
+      allow(redmine).to receive(:projects).and_return(@projects_json)
     end
   end
 end

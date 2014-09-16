@@ -13,6 +13,8 @@ module Minedig
       end
     end
 
+    # parse uri
+    # @param uri redmine host uri
     def home=(uri)
       result = URI.parse(uri)
       @home = uri
@@ -55,6 +57,37 @@ module Minedig
         puts query
         puts "Ticket id:#{id} - #{response.message}"
       end
+    end
+
+    def tickets(count: 100)
+      count = Float::INFINITY if count == :all
+      result = []
+      offset = 0
+
+      while count > 0
+
+        limit = [count, 100].min
+        query = Minedig::Query::create( host: host, path: "/issues.json", 
+                                        param: "offset=#{offset}&limit=#{limit}")
+        count -= limit
+        offset += limit
+
+        begin
+          response = Minedig::Query::send( query: query, api_key: api_key )
+          json = JSON.load(response.body)
+
+          break if json['issues'].empty?
+
+          json['issues'].each do |issue|
+            result << Minedig::Ticket.new(OpenStruct.new(issue))
+          end
+        rescue JSON::ParserError
+          puts query
+          puts "Ticket id:#{id} - #{response.message}"
+        end
+      end
+
+      result
     end
 
     # return project list.

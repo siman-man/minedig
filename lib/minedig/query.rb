@@ -15,8 +15,7 @@ module Minedig
     # @param [String] type data format.
     def self.send(query: nil, api_key: nil, format: :json)
       Net::HTTP.start(query.host, query.port) do |http|
-
-        request = Net::HTTP::Get.new(query.path)
+        request = Net::HTTP::Get.new([query.path, query.query].join('?'))
 
         request.set_content_type("application/#{format}")
         request["X-Redmine-API-Key"] = api_key

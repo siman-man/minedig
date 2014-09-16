@@ -4,7 +4,6 @@ require 'uri'
 require 'json'
 require 'rexml/document'
 require 'ostruct'
-require 'dotenv'
 
 require 'minedig/version'
 require 'minedig/query'

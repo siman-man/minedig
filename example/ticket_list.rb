@@ -9,14 +9,9 @@ redmine = Minedig::Redmine.new do |config|
   config.api_key = ENV["API_KEY"]
 end
 
-# show redmien host.
-puts redmine.host
-
-project = redmine.project('api')
-user_list = project.user_list
-tickets = project.tickets
-ticket = tickets.first
-
-user_list.each do |user|
-  puts user.name
+tickets = redmine.tickets(count: :all)
+puts tickets.size
+puts tickets.last.id
+tickets.each do |ticket|
+  #puts ticket.id
 end
