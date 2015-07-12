@@ -14,9 +14,20 @@ puts redmine.host
 
 project = redmine.project('api')
 user_list = project.user_list
+
 tickets = project.tickets
-ticket = tickets.first
 
 user_list.each do |user|
   puts user.name
 end
+
+tickets.each do |ticket|
+  text = ticket[:description]
+  puts ticket[:id]
+
+  text.gsub!("テストチケット", "サンプルチケット")
+  ticket.description = text
+
+  ticket.update
+end
+

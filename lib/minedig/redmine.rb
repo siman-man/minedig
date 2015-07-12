@@ -37,7 +37,7 @@ module Minedig
         end
       end
 
-      raise 'Not found Project.'
+      raise NotFoundProjectError
     end
 
     # Get the ticket with specified id.
@@ -46,10 +46,10 @@ module Minedig
     def ticket(id)
       raise 'ID has not been specified.' if id.nil?
 
-      query = Minedig::Query::create( host: host, path: "/issues/#{id}.json" )
+      query = Minedig::Query::create(host: host, path: "/issues/#{id}.json")
 
       begin
-        response = Minedig::Query::send( query: query, api_key: api_key )
+        response = Minedig::Query::send(query: query, api_key: api_key)
         json = JSON.load(response.body)
 
         Minedig::Ticket.new(OpenStruct.new(json['issue']))
@@ -67,13 +67,13 @@ module Minedig
       while count > 0
 
         limit = [count, 100].min
-        query = Minedig::Query::create( host: host, path: "/issues.json", 
+        query = Minedig::Query::create(host: host, path: "/issues.json",
                                         param: "offset=#{offset}&limit=#{limit}")
         count -= limit
         offset += limit
 
         begin
-          response = Minedig::Query::send( query: query, api_key: api_key )
+          response = Minedig::Query::send(query: query, api_key: api_key)
           json = JSON.load(response.body)
 
           break if json['issues'].empty?
@@ -93,7 +93,7 @@ module Minedig
     # return project list.
     # @return [Array] project list.
     def projects
-      query = Minedig::Query::create( host: host, path: root_path + '/projects.json' )
+      query = Minedig::Query::create(host: host, path: root_path + '/projects.json')
       response = Minedig::Query::send( query: query, api_key: api_key )
       json = JSON.load(response.body)
       projects = []

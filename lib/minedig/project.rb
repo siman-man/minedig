@@ -1,10 +1,8 @@
-# encoding: utf-8
-
 module Minedig
   class Project
     attr_reader :id, :name, :path, :root_path, :api_key, :host
 
-    def initialize( id: nil, name: nil, path: '', root_path: '', api_key: '', host: '' )
+    def initialize(id: nil, name: nil, path: '', root_path: '', api_key: '', host: '')
       @id = id
       @name = name
       @path = path
@@ -21,23 +19,35 @@ module Minedig
 
     # Get project ticket list.
     # @return [Array] ticket information.
-    def tickets
-      query = Minedig::Query::create( host: host, path: root_path + '/issues.json', param: "project_id=#{id}" )
-      p query
+    def tickets(count: 100)
+      count = Float::INFINITY if count == :all
+      limit = [count, 100].min
+      tickets = []
+      offset = 0
 
-      begin
-        response = Minedig::Query::send( query: query, api_key: api_key )
-        json = JSON.load(response.body)
-        tickets = []
+      while count > 0
+        query = Minedig::Query::create(host: host, path: root_path + '/issues.json',
+                                       param: "offset=#{offset}&limit=#{limit}&project_id=#{id}")
 
-        json['issues'].each do |issue|
-          tickets << Minedig::Ticket.new(OpenStruct.new(issue))
+        count -= limit
+        offset += limit
+
+        begin
+          response = Minedig::Query::send(query: query, api_key: api_key)
+          json = JSON.load(response.body)
+
+          break if json['issues'].empty?
+
+          json['issues'].each do |issue|
+            tickets << Minedig::Ticket.new(ticket: OpenStruct.new(issue), host: host, api_key: api_key)
+          end
+        rescue => ex
+          puts query
+          puts ex.message
         end
-
-        tickets
-      rescue => ex
-        puts ex.message
       end
+
+      tickets
     end
 
     # Get member list.

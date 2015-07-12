@@ -2,17 +2,39 @@
 
 module Minedig
   # Redmineのチケットに関する処理をまとめたもの
-  class Ticket < Redmine
+  class Ticket < Project
     attr_reader :ticket
 
-    def initialize(ticket = nilra)
+    def initialize(ticket: nil, host: nil, api_key: nil)
+      @host = host
+      @api_key = api_key
       @ticket = ticket
+      @update_data = Hash.new
+      @update_data["issue"] = Hash.new
     end
 
-    # チケットが持っているプロパティの一覧を取得する
-    # @return [Array] チケットのプロパティ一覧
+    # get ticket property list
+    # @return [Array] list of ticket property
     def properties
       ticket.singleton_methods
+    end
+
+    # @param [Symbol] property name
+    def [](name)
+      self.send(name)
+    end
+
+    def description
+      ticket["description"]
+    end
+
+    def id
+      ticket["id"]
+    end
+
+    def description=(content)
+      ticket["description"] = content
+      update_data["issue"]["description"] = content
     end
 
     def status
@@ -39,12 +61,36 @@ module Minedig
       ticket.priority["id"]
     end
 
-    def method_missing( name, *args )
-      if ticket.respond_to?(name)
-        ticket[name]
-      else
-        super
-      end
+    def subject
+      ticket.subject
+    end
+
+    def subject=(title)
+      ticket.subject = title
+      update_data["issue"]["subject"] = title
+    end
+
+    def estimated_hours
+      ticket.estimated_hours
+    end
+
+    def to_json
+      ticket.to_json
+    end
+
+    def update
+      json = JSON.generate(update_data)
+      puts json
+      query = Minedig::Query::create(host: host, path: "/issues/#{id}.json")
+
+      puts query
+
+      response = Minedig::Query::send(query: query, api_key: api_key, method: :put, data: json)
+    end
+
+    private
+    def update_data
+      @update_data
     end
   end
 end

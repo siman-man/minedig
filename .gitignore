@@ -20,6 +20,8 @@ tmp
 *.o
 *.a
 mkmf.log
+vendor/bundle
+.idea
 
 # dotenv file
 .env
