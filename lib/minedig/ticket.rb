@@ -53,12 +53,36 @@ module Minedig
       ticket.project["id"]
     end
 
+    def tracker
+      ticket.tracker["name"]
+    end
+
+    def tracker_id
+      ticket.tracker["id"]
+    end
+
     def priority
       ticket.priority["name"]
     end
 
     def priority_id
       ticket.priority["id"]
+    end
+
+    def author
+      ticket.author["name"]
+    end
+
+    def author_id
+      ticket.author["id"]
+    end
+
+    def category
+      ticket.category["name"]
+    end
+
+    def category_id
+      ticket.category["id"]
     end
 
     def subject
@@ -70,8 +94,24 @@ module Minedig
       update_data["issue"]["subject"] = title
     end
 
+    def start_date
+      ticket.start_date
+    end
+
+    def due_date
+      ticket.due_date
+    end
+
+    def done_ratio
+      ticket.done_ratio
+    end
+
     def estimated_hours
       ticket.estimated_hours
+    end
+
+    def spent_hours
+      ticket.spent_hours
     end
 
     def to_json

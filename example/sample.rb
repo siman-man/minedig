@@ -23,7 +23,9 @@ end
 
 tickets.each do |ticket|
   text = ticket[:description]
-  puts ticket[:id]
+  puts "ticket id = #{ticket[:id]}"
+  puts "prject id = #{ticket[:project_id]}, name = #{ticket[:project]}"
+  puts "tracker id = #{ticket.tracker_id}, name = #{ticket.tracker}"
 
   text.gsub!("テストチケット", "サンプルチケット")
   ticket.description = text
