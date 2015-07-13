@@ -68,7 +68,7 @@ module Minedig
 
         limit = [count, 100].min
         query = Minedig::Query::create(host: host, path: "/issues.json",
-                                        param: "offset=#{offset}&limit=#{limit}")
+                                        param: "offset=#{offset}&limit=#{limit}&status_id=*")
         count -= limit
         offset += limit
 
@@ -81,6 +81,8 @@ module Minedig
           json['issues'].each do |issue|
             result << Minedig::Ticket.new(OpenStruct.new(issue))
           end
+
+          sleep(1)
         rescue JSON::ParserError
           puts query
           puts "Ticket id:#{id} - #{response.message}"

@@ -27,7 +27,7 @@ module Minedig
 
       while count > 0
         query = Minedig::Query::create(host: host, path: root_path + '/issues.json',
-                                       param: "offset=#{offset}&limit=#{limit}&project_id=#{id}")
+                                       param: "offset=#{offset}&limit=#{limit}&project_id=#{id}&status_id=*")
 
         count -= limit
         offset += limit
@@ -41,6 +41,8 @@ module Minedig
           json['issues'].each do |issue|
             tickets << Minedig::Ticket.new(ticket: OpenStruct.new(issue), host: host, api_key: api_key)
           end
+
+          sleep(1)
         rescue => ex
           puts query
           puts ex.message
