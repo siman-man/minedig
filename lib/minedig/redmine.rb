@@ -22,24 +22,6 @@ module Minedig
       @root_path = result.path
     end
 
-    # search project。
-    def project(id)
-      projects.each do |project|
-        if project.id == id || project.name == id || project.identifier == id
-          return Minedig::Project.new({
-            id: project.id,
-            name: project.name,
-            root_path: root_path,
-            path: @root_path + "/projects/#{project.identifier}",
-            host: host,
-            api_key: api_key
-          })
-        end
-      end
-
-      raise NotFoundProjectError
-    end
-
     # Get the ticket with specified id.
     # @param id ticket id.
     # @return [BasicObject] information of ticket.
@@ -105,6 +87,25 @@ module Minedig
       end
 
       projects
+    end
+
+    # return project info
+    # @return project info
+    def project(project_name)
+      query = Minedig::Query::create(host: host, path: root_path + "/projects/#{project_name}.json")
+      response = Minedig::Query::send(query: query, api_key: api_key )
+      json = JSON.load(response.body)
+
+      project = OpenStruct.new(json["project"])
+
+      return Minedig::Project.new({
+                                      id: project.id,
+                                      name: project.name,
+                                      root_path: root_path,
+                                      path: root_path + "/projects/#{project.identifier}",
+                                      host: host,
+                                      api_key: api_key
+                                  })
     end
 
     # Convert Hash to OpenStruct data.

@@ -120,10 +120,7 @@ module Minedig
 
     def update
       json = JSON.generate(update_data)
-      puts json
       query = Minedig::Query::create(host: host, path: "/issues/#{id}.json")
-
-      puts query
 
       response = Minedig::Query::send(query: query, api_key: api_key, method: :put, data: json)
     end

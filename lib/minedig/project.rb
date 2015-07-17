@@ -19,11 +19,10 @@ module Minedig
 
     # Get project ticket list.
     # @return [Array] ticket information.
-    def tickets(count: 100)
+    def tickets(count: 25, offset: 0)
       count = Float::INFINITY if count == :all
       limit = [count, 100].min
       tickets = []
-      offset = 0
 
       while count > 0
         query = Minedig::Query::create(host: host, path: root_path + '/issues.json',
