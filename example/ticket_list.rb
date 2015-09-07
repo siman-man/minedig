@@ -9,9 +9,5 @@ redmine = Minedig::Redmine.new do |config|
   config.api_key = ENV["API_KEY"]
 end
 
-tickets = redmine.tickets(count: :all)
-puts tickets.size
-puts tickets.last.id
-tickets.each do |ticket|
-  #puts ticket.id
-end
+ticket = redmine.ticket(83757)
+

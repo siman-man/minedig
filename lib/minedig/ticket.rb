@@ -114,6 +114,10 @@ module Minedig
       ticket.spent_hours
     end
 
+    def journals
+      ticket.journals
+    end
+
     def to_json
       ticket.to_json
     end

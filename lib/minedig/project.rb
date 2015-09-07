@@ -26,7 +26,7 @@ module Minedig
 
       while count > 0
         query = Minedig::Query::create(host: host, path: root_path + '/issues.json',
-                                       param: "offset=#{offset}&limit=#{limit}&project_id=#{id}&status_id=*")
+                                       param: "include=journals&offset=#{offset}&limit=#{limit}&project_id=#{id}&status_id=*")
 
         count -= limit
         offset += limit

@@ -28,13 +28,14 @@ module Minedig
     def ticket(id)
       raise 'ID has not been specified.' if id.nil?
 
-      query = Minedig::Query::create(host: host, path: "/issues/#{id}.json")
+      query = Minedig::Query::create(host: host, path: "/issues/#{id}.json",
+                                      param: "include=journals")
 
       begin
         response = Minedig::Query::send(query: query, api_key: api_key)
         json = JSON.load(response.body)
 
-        Minedig::Ticket.new(OpenStruct.new(json['issue']))
+        Minedig::Ticket.new(ticket: OpenStruct.new(json['issue']), host: host, api_key: api_key)
       rescue JSON::ParserError
         puts query
         puts "Ticket id:#{id} - #{response.message}"
@@ -61,7 +62,7 @@ module Minedig
           break if json['issues'].empty?
 
           json['issues'].each do |issue|
-            result << Minedig::Ticket.new(OpenStruct.new(issue))
+            result << Minedig::Ticket.new(ticket: OpenStruct.new(json['issue']), host: host, api_key: api_key)
           end
 
           sleep(1)

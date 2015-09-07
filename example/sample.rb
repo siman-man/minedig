@@ -1,6 +1,5 @@
 require 'minedig'
 require 'dotenv'
-require 'pp'
 Dotenv.load
 
 # Creaet redmien instance.
@@ -12,12 +11,35 @@ end
 # show redmien host.
 puts redmine.host
 
-project = redmine.project('api')
-user_list = project.user_list
-tickets = project.tickets(count: 25)
+fetch_count = 25
+offset = 0
 
-tickets.each do |ticket|
-  text = ticket[:description]
-  puts "ticket id = #{ticket[:id]}"
+# rad2infoプロジェクトの取得
+project = redmine.project('rad2info')
+
+loop do
+  tickets = project.tickets(count: fetch_count, offset: offset)
+  puts "offset = #{offset} - #{offset + fetch_count}, ticket count = #{tickets.size}"
+
+  # 更新するチケットが無くなったら終了
+  break if tickets.empty?
+
+  tickets.each do |ticket|
+    text = ticket[:description]
+
+    if text =~ /old_pass/
+      begin
+        text.gsub!('old_pass', 'new_pass')
+        ticket.description = text
+        ticket.update
+        sleep(1)
+        puts "ticket id = #{ticket[:id]} success"
+      rescue Exception => ex
+        puts ex.message
+        exit(1)
+      end
+    end
+  end
+
+  offset += fetch_count
 end
-
