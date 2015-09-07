@@ -22,6 +22,7 @@ tmp
 mkmf.log
 vendor/bundle
 .idea
+example/*.rb
 
 # dotenv file
 .env
